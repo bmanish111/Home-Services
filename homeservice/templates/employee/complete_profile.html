@@ -1,0 +1,107 @@
+{% extends 'components/layout.html' %}
+
+{% block page_title %}
+  Complete Your Profile
+{% endblock %}
+{% block links %}
+  <style>
+    form {
+      width: 600px;
+    }
+    label {
+      color: #000;
+    }
+  </style>
+{% endblock %}
+{% block main_content %}
+  <div class="v-100 vh-100 d-flex justify-content-centre form-container m-auto">
+    {% if not employee %}
+      <form class="lg-w-50 mx-auto border-5 p-5" id="signup-form" action="/employee/register/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h1 class="form-title h3 mb-3 fw-normal">Complete Your Profile</h1>
+
+        <div class="row">
+          <div class="mb-3 col-md-6">
+            <label for="job_title" class="form-label">Job Title</label>
+            <select class="form-select" name="job_title" id="job_title" required>
+              <option value="">Select your service</option>
+              {% for item in service %}
+                <option value="{{ item.pk }}">{{ item.name }}</option>
+              {% endfor %}
+            </select>
+            {% comment %} {% if form.name.errors %}
+              <div class="d-block invalid-feedback">{{ form.name.errors.0 }}</div>
+            {% endif %} {% endcomment %}
+          </div>
+
+          <div class="mb-3 col-md-6">
+            <label for="experience" class="form-label">Experience in Year</label>
+            <input type="number" name="experience" class="form-control" id="experience" value="{{ form.data.experience }}" required />
+            {% if form.experience.errors %}
+              <div class="d-block invalid-feedback">{{ form.experience.errors.0 }}</div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <div class="mb-3 col">
+            <label for="bio" class="form-label">Bio</label>
+            {% comment %} <textarea type="text" name="bio" class="form-control" id="bio" value="{{ form.data.bio }}" required></textarea> {% endcomment %}
+            <textarea class="form-control" placeholder="Write about yourself" id="bio" style="height: 100px" name="bio" required></textarea>
+            {% if form.bio.errors %}
+              <div class="d-block invalid-feedback">{{ form.bio.errors.0 }}</div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col col-md-5 col-sm-6">
+            <label for="contact" class="form-label">ID Type</label>
+            <select class="form-select" name="id_type" id="" required>
+              <option value>Select ID Type</option>
+              <option value="passport">Passport</option>
+              <option value="driving_license">Driving License</option>
+              <option value="national_id">National ID</option>
+            </select>
+            {% if form.contact.errors %}
+              <div class="d-block invalid-feedback">{{ form.contact.errors.0 }}</div>
+            {% endif %}
+          </div>
+          <div class="mb-3 col">
+            <label for="id_image" class="form-label">ID Image</label>
+            <input type="file" name="id_image" class="form-control" id="id_image" required />
+            {% if form.id_image.errors %}
+              <div class="d-block invalid-feedback">{{ form.id_image.errors.0 }}</div>
+            {% endif %}
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Submit</button>
+      </form>
+    {% else %}
+      <main class="border-5 p-3 w-50 text-blue">
+        <h1 class="text-white">Status: {{ status }}</h1>
+        {% if not status == 'Approved' %}
+          <p class="fs-5">Your profile is under review. When your profile is approved, your profile will be visible to customer</p>
+        {% else %}
+          <p class="fs-5">Your profile is approved. Your profile is visible to customer</p>
+        {% endif %}
+      </main>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block script %}
+  <script>
+    let password1 = document.getElementById('password1')
+    let password2 = document.getElementById('password2')
+    passworderror = document.getElementById('password-error')
+    password2.addEventListener('input', function () {
+      if (password1.value !== password2.value) {
+        passworderror.classList.add('d-block')
+      } else {
+        passworderror.classList.remove('d-block')
+      }
+    })
+  </script>
+{% endblock %}

@@ -5,6 +5,10 @@ from django.contrib.auth.models import (
     BaseUserManager,
 )
 
+from django.utils.text import slugify
+
+# from tinymce.models import HTMLField
+
 
 class CustomUserManager(BaseUserManager):
 
@@ -78,3 +82,47 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def has_module_perms(self, app_label):
         return True
+
+
+class Employee(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    job_title = models.CharField(max_length=200)
+    experience = models.IntegerField()
+    bio = models.TextField()
+    is_doc_uploaded = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)
+
+    ID_TYPE_CHOICES = [
+        ("passport", "Passport"),
+        ("driving_license", "Driving License"),
+        ("national_id", "National ID"),
+        # Add more choices as needed
+    ]
+
+    id_type = models.CharField(max_length=20, choices=ID_TYPE_CHOICES)
+
+    id_image = models.ImageField(upload_to="Documents/", null=True, blank=True)
+
+    # def add_employee(self, user):
+    #     if not user.is_superuser:
+    #         self.user = user
+    #         self.save()
+    #     else:
+    #         raise ValueError("You can't add super users as employees")
+
+    def __str__(self):
+        return self.user.fullname
+
+
+class Service(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    image = models.ImageField(upload_to="service_images/")
+    slug = models.SlugField(unique=True)
+
+    # def save(self, *args, **kwargs):
+    #     self.slug = slugify(self.name)
+    #     super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name

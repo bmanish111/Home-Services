@@ -1,0 +1,53 @@
+{% extends 'customer/customer_layout.html' %}
+{% load static %}
+{% block page_title %}
+  Appointment Form
+{% endblock %}
+
+{% block links %}
+  <link rel="stylesheet" href="{% static 'css/table.css' %}" />
+  <style>
+    section {
+      background: url("{% static 'img/contact.jpeg' %}") no-repeat center center/cover;
+    }
+    section form {
+        background-color: rgb(47 172 255 / 10%);
+    }
+  </style>
+{% endblock %}
+{% block main_content %}
+  <section name="Appointment">
+    <div class="container p-5">
+      <div class="row">
+        <h2 class="text-center mb-5">Appointment - Plumber</h2>
+          <form action="" method="post" class="border-5 p-4 px-5 w-50 mx-auto">
+            <h2 class="text-center">Plumber</h2>
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="Name" class="form-label">Name</label>
+              <input type="text" name="Name" class="form-control" value="Mukesh" disabled />
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">Phone</label>
+              <input type="text" name="phone" class="form-control" value="9999999999" disabled />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="text" name="email" class="form-control" value="mukeshmahato@gmail.com" disabled />
+            </div>
+            <div class="mb-3">
+              <label for="date" class="form-label">Time &amp Date</label>
+              <input type="datetime-local" name="date" class="form-control" />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">What's Your Problem</label>
+              <textarea type="text" name="problem" class="form-control" required></textarea>
+            </div>
+            <div class="submit-button-wrapper d-flex justify-content-end">
+              <input type="submit" value="Send" class="submit-btn" />
+            </div>
+          </form>
+      </div>
+    </div>
+  </section>
+{% endblock %}

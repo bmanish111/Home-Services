@@ -21,7 +21,29 @@
             <a class="nav-link" href="/contact">Contact</a>
           </li>
         </ul>
-        <a href="/signup" class="btn btn-outline-primary">Sign Up</a>
+        {% if request.user.is_anonymous %}
+          <a href="/signup" class="btn btn-outline-primary">Sign Up</a>
+        {% else %}
+          <li class="nav-item dropdown" style="list-style-type: none;">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="profile-pic">
+                <img src="{{ user.profile_pic.url }}" alt="Profile Picture" />
+              </div>
+              <span>{{ user.fullname }}</span>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li>
+                <a class="dropdown-item" href="#"><i class="bi bi-person"></i> My Profile</a>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li>
+                <a class="dropdown-item" href="/customer/logout"><i class="bi bi-box-arrow-right"></i> Log Out</a>
+              </li>
+            </ul>
+          </li>
+        {% endif %}
       </div>
     </div>
   </nav>

@@ -3,46 +3,22 @@
     <h2 style="text-align: center">Our Services</h2>
     <div class="mt-5">
       <div class="row gx-4 mt-3">
-        <div class="col-md-6 col-lg-4 col-sm-12 mb-4">
-          <div class="card text-center">
-            <div class="card-header">Electrician</div>
-            <div class="card-body card-image">
-              <img src="static/img/services/plumber.jpg" class="rounded" alt="..." />
-              <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga officiis saepe, debitis aliquid nisi, placeat hic qui cumque tenetur illo nostrum optio veritatis in natus laboriosam alias earum nam corrupti ipsum quis minima inventore. Minus quas illum ex nemo animi cupiditate, nam expedita laboriosam pariatur cum impedit quaerat aspernatur! Soluta earum eos maiores nam?</p>
-              <a href="/service" class="btn btn-primary">Explore</a>
+        {% if services %}
+          {% for item in services %}
+            <div class="col-md-6 col-lg-4 col-sm-12 mb-4">
+              <div class="card text-center">
+                <div class="card-header">{{ item.name }}</div>
+                <div class="card-body card-image">
+                  <img src="{{ item.image.url }}" class="rounded" alt="{{ item.name }}" />
+                  <p class="card-text">{{ item.description|slice:':140' }}...</p>
+                  <a href="/service/{{ item.slug }}" class="btn btn-primary">Explore</a>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4 col-sm-12 mb-4">
-          <div class="card text-center">
-            <div class="card-header">Plumber</div>
-            <div class="card-body card-image">
-              <img src="static/img/services/plumber.jpg" class="rounded" alt="..." />
-              <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga officiis saepe, debitis aliquid nisi, placeat hic qui cumque tenetur illo nostrum optio veritatis in natus laboriosam alias earum nam corrupti ipsum quis minima inventore. Minus quas illum ex nemo animi cupiditate, nam expedita laboriosam pariatur cum impedit quaerat aspernatur! Soluta earum eos maiores nam?</p>
-              <a href="/service" class="btn btn-primary">Explore</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4 col-sm-12 mb-4">
-          <div class="card text-center">
-            <div class="card-header">Carpenter</div>
-            <div class="card-body card-image">
-              <img src="static/img/services/plumber.jpg" class="rounded" alt="..." />
-              <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga officiis saepe, debitis aliquid nisi, placeat hic qui cumque tenetur illo nostrum optio veritatis in natus laboriosam alias earum nam corrupti ipsum quis minima inventore. Minus quas illum ex nemo animi cupiditate, nam expedita laboriosam pariatur cum impedit quaerat aspernatur! Soluta earum eos maiores nam?</p>
-              <a href="/service" class="btn btn-primary">Explore</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4 col-sm-12 mb-4">
-          <div class="card text-center">
-            <div class="card-header">AC Maintainer</div>
-            <div class="card-body card-image">
-              <img src="static/img/services/plumber.jpg" class="rounded" alt="..." />
-              <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga officiis saepe, debitis aliquid nisi, placeat hic qui cumque tenetur illo nostrum optio veritatis in natus laboriosam alias earum nam corrupti ipsum quis minima inventore. Minus quas illum ex nemo animi cupiditate, nam expedita laboriosam pariatur cum impedit quaerat aspernatur! Soluta earum eos maiores nam?</p>
-              <a href="/service" class="btn btn-primary">Explore</a>
-            </div>
-          </div>
-        </div>
+          {% endfor %}
+        {% else %}
+          <p>No services are available</p>
+        {% endif %}
       </div>
     </div>
   </div>

@@ -2,13 +2,18 @@ from django.shortcuts import render, HttpResponse, redirect
 from .forms import MyForm
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib import messages
+from homeservice.models import Employee
 
 User = get_user_model()
+
+from homeservice.models import Service
+from homeservice.decorators import anonymous_required
 
 
 # Create your views here.
 def home(request):
-    return render(request, "index.html")
+    services = Service.objects.all()
+    return render(request, "index.html", {"services": services})
 
 
 def about(request):
@@ -16,13 +21,22 @@ def about(request):
 
 
 def service(request):
-    return render(request, "services.html")
+    services = Service.objects.all()
+    return render(request, "services.html", {"services": services})
+
+
+def service_details(request, slug):
+    service = Service.objects.get(slug=slug)
+    employees = Employee.objects.filter(job_title=service.pk)
+    print(employees)
+    return render(request, "service_details.html", {"service": service, "employees": employees})
 
 
 def contact(request):
     return render(request, "contact.html")
 
 
+@anonymous_required
 def login_page(request):
     if request.method == "POST":
         email = request.POST.get("email")
@@ -33,16 +47,14 @@ def login_page(request):
             if user.role == "customer":
                 login(request, user)
                 # return HttpResponse("Customer Home")
-                return redirect("customer_home")
+                return redirect("customer:customer_home")
             elif user.role == "employee":
                 login(request, user)
                 if not request.user.is_account_verified:
-                    # Employee need to verify their account
-                    return HttpResponse(
-                        "Login Successful, You are a Employee but need to upload your documents"
-                    )
+                    return redirect("employee:employee_register")
                 else:
-                    return HttpResponse(request, "Login Successful, You are a Employee")
+                    print("Login Successful, You are a Employee")
+                    return redirect("employee:employee_home")
             elif user.role == "admin":
                 print("Invalid Email or Password")
                 messages.error(request, "Invalid Email or Password")
@@ -53,6 +65,7 @@ def login_page(request):
     return render(request, "login.html")
 
 
+@anonymous_required
 def register_page(request):
     if request.method == "POST":
 
