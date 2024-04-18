@@ -6,6 +6,7 @@
 
 {% block main_content %}
   <div class="vh-100 d-flex flex-column justify-content-centre align-content-start form-container">
+    {% include 'components/message.html' %}
     <main class="form-signin w-40 m-auto p-5 border-5">
       <form action="/login" method="post">
         {% csrf_token %}

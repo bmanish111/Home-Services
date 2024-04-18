@@ -1,0 +1,119 @@
+{% extends 'components/layout.html' %}
+
+{% block page_title %}
+  Register
+{% endblock %}
+
+{% block main_content %}
+  <div class="v-100 vh-100 d-flex justify-content-centre form-container m-auto">
+    {% comment %} <div class="container mt-4">
+      {% endcomment %}
+      {% comment %} <h1 class="d-inline mt5 heading-text" style="">Welcome to DecoHome</h1> {% endcomment %}
+      <form class="lg-w-50 mx-auto border-5 p-5" id="signup-form" action="/signup" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h1 class="form-title h3 mb-3 fw-normal">Register Please</h1>
+
+        <div class="row">
+          <div class="mb-3 col-md-6">
+            <label for="name" class="form-label">Full Name</label>
+            <input type="text" name="name" class="form-control" id="name" value="{{ form.data.name }}" required />
+            {% if form.name.errors %}
+              <div class="d-block invalid-feedback">{{ form.name.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3 col-md-6">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" id="email" value="{{ form.data.email }}" required />
+            {% if form.email.errors %}
+              <div class="d-block invalid-feedback">{{ form.email.errors.0 }}</div>
+            {% endif %}
+          </div>
+          {% comment %} <div class="mb-3 col-md-6">
+            <label for="last_name" class="form-label">Last Name</label>
+            <input type="text" name="last_name" class="form-control" id="last_name" value="{{ form.data.last_name }}" required />
+            {% if form.last_name.errors %}
+              <div class="d-block invalid-feedback">{{ form.last_name.errors.0 }}</div>
+            {% endif %}
+          </div> {% endcomment %}
+        </div>
+
+        <div class="mb-3 row">
+          <div class="mb-3 col-md-6">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" name="address" class="form-control" id="address" value="{{ form.data.address }}" required />
+            {% if form.address.errors %}
+              <div class="d-block invalid-feedback">{{ form.address.errors.0 }}</div>
+            {% endif %}
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="contact" class="form-label">Phone</label>
+            <input type="text" name="contact" class="form-control" id="contact" value="{{ form.data.contact }}" required />
+            {% if form.contact.errors %}
+              <div class="d-block invalid-feedback">{{ form.contact.errors.0 }}</div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col">
+            <label for="profile_pic" class="form-label">Profile Image</label>
+            <input type="file" name="profile_pic" class="form-control" id="profile_pic" required />
+            {% if form.profile_pic.errors %}
+              <div class="d-block invalid-feedback">{{ form.profile_pic.errors.0 }}</div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-md-6">
+            <label for="password1" class="form-label">Password</label>
+            <input type="password" name="password1" class="form-control" id="password1" required />
+            {% if form.password1.errors %}
+              <div class="d-block invalid-feedback">{{ form.password1.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3 col-md-6">
+            <label for="password2" class="form-label">Confirm Password</label>
+            <input type="password" name="password2" class="form-control" id="password2" required />
+            {% if form.password2.errors %}
+              <div class="d-block invalid-feedback">{{ form.password2.errors.0 }}</div>
+            {% endif %}
+            <div class="invalid-feedback" id="password-error">Passwords does not matched.</div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label" for="is_employee">Are you an service provider?</label>
+          <input type="radio" value="True" name="is_employee" id="Yes" required />
+          <label class="form-check-label" for="Yes">Yes</label>
+          <input type="radio" value="False" name="is_employee" id="No" required checked />
+          <label class="form-check-label" for="No">No</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Submit</button>
+
+        <p class="mt-4 mb-0">
+          Already have an account ? <a href="/login">Login Here</a>
+        </p>
+      </form>
+      {% comment %}
+    </div> {% endcomment %}
+  </div>
+{% endblock %}
+
+{% block script %}
+  <script>
+    let password1 = document.getElementById('password1')
+    let password2 = document.getElementById('password2')
+    passworderror = document.getElementById('password-error')
+    password2.addEventListener('input', function () {
+      if (password1.value !== password2.value) {
+        passworderror.classList.add('d-block')
+      } else {
+        passworderror.classList.remove('d-block')
+      }
+    })
+  </script>
+{% endblock %}
