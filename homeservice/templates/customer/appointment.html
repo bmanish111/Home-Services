@@ -19,25 +19,27 @@
   <section name="Appointment">
     <div class="container p-5">
       <div class="row">
-        <h2 class="text-center mb-5">Appointment - Plumber</h2>
-          <form action="" method="post" class="border-5 p-4 px-5 w-50 mx-auto">
-            <h2 class="text-center">Plumber</h2>
+        <h2 class="text-center mb-5">Appointment - {{ service.name }}</h2>
+          <form action="{% url "customer:customer_appointment" %}" method="post" class="border-5 p-4 px-5 w-50 mx-auto">
+            <h2 class="text-center">{{service.name}}</h2>
             {% csrf_token %}
+            <input type="hidden" name="service" value="{{service.id}}" />
+            <input type="hidden" name="employee" value="{{employee.id}}" />
             <div class="mb-3">
               <label for="Name" class="form-label">Name</label>
-              <input type="text" name="Name" class="form-control" value="Mukesh" disabled />
+              <input type="text" class="form-control" value="{{employee.user.fullname}}" disabled />
             </div>
             <div class="mb-3">
               <label for="phone" class="form-label">Phone</label>
-              <input type="text" name="phone" class="form-control" value="9999999999" disabled />
+              <input type="text" name="phone" class="form-control" value="{{employee.user.phone}}" disabled />
             </div>
             <div class="mb-3">
               <label for="email" class="form-label">Email</label>
-              <input type="text" name="email" class="form-control" value="mukeshmahato@gmail.com" disabled />
+              <input type="text" class="form-control" value="{{employee.user.email}}" disabled />
             </div>
             <div class="mb-3">
               <label for="date" class="form-label">Time &amp Date</label>
-              <input type="datetime-local" name="date" class="form-control" />
+              <input type="datetime-local" name="date_time" class="form-control" required/>
             </div>
             <div class="mb-3">
               <label for="email" class="form-label">What's Your Problem</label>

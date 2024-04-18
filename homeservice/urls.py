@@ -19,4 +19,6 @@ urlpatterns = [
 
     # Employee
     path('employee/', include('homeservice.views.employee.urls')),
+
+    path('complete', views.complete_profile)
 ]

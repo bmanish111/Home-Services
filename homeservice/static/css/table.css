@@ -98,6 +98,14 @@
 .table tbody td.status .completed:after {
    background: #1d21f2;
 }
+.table tbody td.status .rejected {
+   background: #f4b3b3;
+   color: #cf0c0c;
+}
+
+.table tbody td.status .rejected:after {
+   background: #f21d1d;
+}
 
 .table tbody td .img {
    width: 50px;

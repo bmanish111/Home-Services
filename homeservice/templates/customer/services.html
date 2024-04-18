@@ -3,34 +3,14 @@
 {% block page_title %}
   Services
 {% endblock %}
-
+{% block links %}
+  <style>
+    .Services {
+      background-color: #fff;
+    }
+  </style>
+{% endblock %}
 {% block main_content %}
   <div class="mt-5"></div>
-  <section>
-    <div class="container">
-      <h2 style="text-align: center">Our Services</h2>
-      <div class="mt-5">
-        <div class="row gx-4 mt-3">
-          {% if services %}
-            {% for item in services %}
-              <div class="col-md-6 col-lg-4 col-sm-12 mb-4">
-                <div class="card text-center">
-                  <div class="card-header">{{ item.name }}</div>
-                  <div class="card-body card-image">
-                    <img src="{{ item.image.url }}" class="rounded" alt="{{ item.name }}" />
-                    <p class="card-text">{{ item.description|slice:':140' }}...</p>
-                    <a href="/customer/service/{{ item.slug }}" class="btn btn-primary">Explore</a>
-                    {% comment %} <a href="{% url 'customer_service_details' slug = service.slug %}">Explore</a><br /> {% endcomment %}
-                    {% comment %} <a href="/customer/service/{{ item.slug }}">Explore</a><br /> {% endcomment %}
-                  </div>
-                </div>
-              </div>
-            {% endfor %}
-          {% else %}
-            <p>No services are available</p>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-  </section>
+  {% include 'components/services_list.html' %}
 {% endblock %}

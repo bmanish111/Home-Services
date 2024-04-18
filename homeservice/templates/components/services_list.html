@@ -11,7 +11,11 @@
                 <div class="card-body card-image">
                   <img src="{{ item.image.url }}" class="rounded" alt="{{ item.name }}" />
                   <p class="card-text">{{ item.description|slice:':140' }}...</p>
+                  {% if '/customer/' in request.path %}
+                  <a href="/customer/service/{{ item.slug }}" class="btn btn-primary">Explore</a>
+                  {% else %}
                   <a href="/service/{{ item.slug }}" class="btn btn-primary">Explore</a>
+                  {% endif %} 
                 </div>
               </div>
             </div>

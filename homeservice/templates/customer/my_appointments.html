@@ -1,33 +1,19 @@
 {% extends 'customer/customer_layout.html' %}
 {% load static %}
 {% block page_title %}
-  Customer Dashboard
+  My Appointments
 {% endblock %}
-
 {% block links %}
   <link rel="stylesheet" href="{% static 'css/table.css' %}" />
 {% endblock %}
 {% block main_content %}
-  <section class="about_section layout_padding-bottom">
-    <div class="container">
-      <h2 style="text-align: center" class="my-5">Customer Home Page</h2>
-      <hr />
-
-      <div class="col-lg-12 col-md-12">
-        <div class="img-box">
-          <img src="{% static 'img/customer_home_page.jpg' %}" style="height: ;" alt="" />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <hr class="m-0 p-0" />
-
+  <div class="mt-5"></div>
+  {% include "components/message.html" %}
   <section class="ftco-section">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-6 text-center mb-4">
-          <h2 class="heading-section">Recent Bookings</h2>
+          <h2 class="heading-section">My Appointments</h2>
         </div>
       </div>
       <div class="row">
@@ -72,6 +58,9 @@
                         ">
                           {{ item.status }}
                         </span>
+                      </td>
+                      <td class="text-danger fs-6">
+                        <a href="{% url 'customer:cancel_appointment' item.id %}" class="text-danger" onclick="return confirm('Are you sure want to cancel appointment ?')"><i class="bi bi-x-lg"></i></a>
                       </td>
                     </tr>
                   {% endfor %}

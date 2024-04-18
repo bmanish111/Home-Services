@@ -126,3 +126,39 @@ class Service(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Appointment(models.Model):
+    customer = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="customer"
+    )
+    employee = models.ForeignKey(
+        Employee, on_delete=models.CASCADE, related_name="employee"
+    )
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    date = models.DateField()
+    time = models.TimeField()
+    problem = models.TextField()
+
+    STATUS_CHOICES = [
+        ("Pending", "Pending"),
+        ("Approved", "Approved"),
+        ("Completed", "Completed"),
+        ("Rejected", "Rejected"),
+    ]
+
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="Pending")
+
+    def __str__(self):
+        return f"{self.customer.fullname} - {self.employee.user.fullname} - {self.service.name}"
+
+
+class Inquiry(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=15)
+    message = models.TextField()
+    is_read = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name    

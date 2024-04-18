@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from .forms import MyForm
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib import messages
-from homeservice.models import Employee
+from homeservice.models import Employee, Inquiry
 
 User = get_user_model()
 
@@ -28,11 +28,24 @@ def service(request):
 def service_details(request, slug):
     service = Service.objects.get(slug=slug)
     employees = Employee.objects.filter(job_title=service.pk)
-    print(employees)
-    return render(request, "service_details.html", {"service": service, "employees": employees})
+    return render(
+        request, "service_details.html", {"service": service, "employees": employees}
+    )
 
 
 def contact(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        phone = request.POST.get("phone")
+        email = request.POST.get("email")
+        message = request.POST.get("message")
+        inquiry = Inquiry(name=name, email=email, phone=phone, message=message)
+        inquiry.save()
+        messages.success(
+            request,
+            "Your inquery form has been submitted successfully. We will contact you soon.",
+        )
+        return redirect("contact")
     return render(request, "contact.html")
 
 
@@ -113,3 +126,9 @@ def register_page(request):
 def logout_user(request):
     logout(request)
     return redirect("login")
+
+
+def complete_profile(request):
+    service = Service.objects.all()
+    print(service)
+    return render(request, "complete_profile.html", {"service": service})
