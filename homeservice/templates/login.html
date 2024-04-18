@@ -1,0 +1,31 @@
+{% extends 'components/layout.html' %}
+
+{% block page_title %}
+  Login
+{% endblock %}
+
+{% block main_content %}
+  <div class="vh-100 d-flex flex-column justify-content-centre align-content-start form-container">
+    <main class="form-signin w-40 m-auto p-5 border-5">
+      <form action="/login" method="post">
+        {% csrf_token %}
+        <h1 class="form-title h3 mb-5 fw-normal">Login</h1>
+
+        <div class="form-floating">
+          <input type="text" class="form-control" id="Email" name="email" placeholder="Email Address" />
+          <label for="Email">Email</label>
+        </div>
+
+        <div class="form-floating mt-4">
+          <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password" />
+          <label for="floatingPassword">Password</label>
+        </div>
+        <button class="btn btn-primary w-100 py-2 mt-4" type="submit">Sign in</button>
+
+        <p class="mt-4 mb-0">
+          Not have an account ? <a href="/signup">Create Here</a>
+        </p>
+      </form>
+    </main>
+  </div>
+{% endblock %}
