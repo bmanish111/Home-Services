@@ -32,7 +32,8 @@ def login_page(request):
         if user:
             if user.role == "customer":
                 login(request, user)
-                return HttpResponse("Customer Home")
+                # return HttpResponse("Customer Home")
+                return redirect("customer_home")
             elif user.role == "employee":
                 login(request, user)
                 if not request.user.is_account_verified:

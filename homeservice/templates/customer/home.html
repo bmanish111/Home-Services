@@ -1,0 +1,100 @@
+{% extends 'customer/customer_layout.html' %}
+{% load static %}
+{% block page_title %}
+  Customer Dashboard
+{% endblock %}
+
+{% block links %}
+  <link rel="stylesheet" href="{% static 'css/table.css' %}" />
+{% endblock %}
+{% block main_content %}
+  <section class="about_section layout_padding-bottom">
+    <div class="container">
+      <h2 style="text-align: center" class="my-5">Customer Home Page</h2>
+      <hr />
+
+      <div class="col-lg-12 col-md-12">
+        <div class="img-box">
+          <img src="{% static 'img/customer_home_page.jpg' %}" style="height: ;" alt="" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="m-0 p-0" />
+
+  <section class="ftco-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6 text-center mb-4">
+          <h2 class="heading-section">Recent Bookings</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="table-wrap">
+            <table class="table table-responsive-xl">
+              <thead>
+                <tr>
+                  <th>Service</th>
+                  <th>Service Man</th>
+                  <th>Date</th>
+                  <th>Contact</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="alert" role="alert">
+                  <td>Plumber</td>
+                  <td class="d-flex align-items-center">
+                    <div class="img" style="background-image: url({% static 'img/services/human1.jpg' %});"></div>
+                    <div class="pl-3 name">
+                      <span>Service Provider Name</span>
+                    </div>
+                  </td>
+                  <td>2023/04/05</td>
+                  <td>9812345678</td>
+                  <td class="status">
+                    <span class="active">Accept</span>
+                  </td>
+                </tr>
+                <tr class="alert" role="alert">
+                  <td>Electrician</td>
+                  <td class="d-flex align-items-center">
+                    <div class="img" style="background-image: url({% static 'img/services/human1.jpg' %});"></div>
+                    <div class="pl-3 email">
+                      <span>Mukesh Mahato</span>
+                    </div>
+                  </td>
+                  <td>2024-05-06</td>
+                  <td>9812345678</td>
+                  <td class="status">
+                    <span class="waiting">Pending</span>
+                  </td>
+                </tr>
+                <tr class="alert" role="alert">
+                  <td>Electrician</td>
+                  <td class="d-flex align-items-center">
+                    <div class="img" style="background-image: url({% static 'img/services/human1.jpg' %});"></div>
+                    <div class="pl-3 email">
+                      <span>Mukesh Mahato</span>
+                    </div>
+                  </td>
+                  <td>2024-05-06</td>
+                  <td>9812345678</td>
+                  <td class="status">
+                    <span class="completed">Completed</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="text-center">
+              <a href="" class="btn btn-primary text-center w-25">View More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
