@@ -94,3 +94,25 @@ def cancel_appointment(request, appointment_id):
     else:
         messages.error(request, "Invalid request, Cannot cancel appointment!")
         return redirect("customer:customer_appointments")
+
+
+@role_required("customer")
+def customer_profile(request):
+    if request.method == "POST":
+        current_password = request.POST["current_password"]
+        new_password = request.POST["new_password"]
+        confirm_password = request.POST["confirm_password"]
+        if not request.user.check_password(current_password):
+            messages.error(request, "Invalid current password!")
+            print("Invalid current password!")
+        else:
+            if new_password != confirm_password:
+                print("Passwords do not match!")
+                messages.error(request, "Passwords do not match!")
+            else:
+                request.user.set_password(new_password)
+                request.user.save()
+                messages.success(request, "Password updated successfully!")
+                print("Password updated successfully!")
+        return redirect("customer:customer_profile")
+    return render(request, "customer/update_profile.html")
