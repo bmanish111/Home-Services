@@ -40,4 +40,4 @@ def register(request):
 
 @role_required("employee")
 def home(request):
-    return HttpResponse("Employee home")
+    return render(request, "employee/home.html")
