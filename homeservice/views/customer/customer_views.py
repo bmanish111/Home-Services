@@ -1,8 +1,9 @@
 from django.shortcuts import render, HttpResponse, redirect
-from homeservice.models import Service, Appointment, Employee
+from homeservice.models import Service, Appointment, Employee, Rating
 from django.contrib.auth import logout
 from homeservice.decorators import role_required
 from django.contrib import messages
+from django.http import HttpResponseNotAllowed
 
 
 @role_required("customer")
@@ -59,7 +60,8 @@ def appointment(request, service_id=None, employee_id=None):
             problem=problem,
         )
         appointment.save()
-        return HttpResponse("Appointment saved successfully!")
+        messages.success(request, "Appointment booked successfully!")
+        return redirect("customer:customer_appointments")
 
     service = Service.objects.get(id=service_id)
     employee = Employee.objects.get(id=employee_id)
@@ -116,3 +118,39 @@ def customer_profile(request):
                 print("Password updated successfully!")
         return redirect("customer:customer_profile")
     return render(request, "customer/update_profile.html")
+
+
+@role_required("customer")
+def rating(request):
+    if request.method == "POST":
+        rating = request.POST["rating"]
+        review = request.POST["review"]
+        employee = Employee.objects.get(id=request.POST["employee"])
+        if Appointment.objects.filter(
+            customer=request.user, employee=employee, status="Completed"
+        ).exists():
+            print("Completed appointment found!")
+            if Rating.objects.filter(customer=request.user, employee=employee).exists():
+                messages.error(request, "You have already rated this employee!")
+                print("You have already rated this employee!")
+
+            else:
+                print("rating saved successfully!")
+                messages.success(request, "Rating submitted successfully!")
+                rating = Rating(
+                    customer=request.user,
+                    employee=employee,
+                    rate=rating,
+                    review=review,
+                )
+                rating.save()
+        else:
+            print(
+                "Sorry you cannot rate, beacuse you have not completed appointment with the serviceman!"
+            )
+            messages.error(
+                request,
+                "Sorry you cannot rate, beacuse you have not completed appointment with the serviceman!",
+            )
+        return redirect(request.META.get("HTTP_REFERER", "/"))
+    return HttpResponseNotAllowed("Method Not Allowed!")

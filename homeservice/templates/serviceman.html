@@ -1,0 +1,307 @@
+{% extends 'components/layout.html' %}
+{% load static %}
+{% block page_title %}
+  Serviceman Profile
+{% endblock %}
+
+{% block links %}
+  <style>
+    .star {
+      font-size: 5vh;
+      cursor: pointer;
+    }
+    
+    .one {
+      color: rgb(255, 0, 0);
+    }
+    
+    .two {
+      color: rgb(255, 106, 0);
+    }
+    
+    .three {
+      color: rgb(251, 255, 120);
+    }
+    
+    .four {
+      color: rgb(255, 255, 0);
+    }
+    
+    .five {
+      color: rgb(24, 159, 14);
+    }
+    .notice_action {
+      visibility: hidden;
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      margin: 0 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .notice_action_btns {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .card-body:hover .notice_action {
+      visibility: visible;
+    }
+  </style>
+{% endblock %}
+
+{% block main_content %}
+  {% include 'components/message.html' %}
+  <div class="mt-5"></div>
+  <section class="layout_padding-bottom">
+    <div class="alert fade" role="alert" id="myAlert" style="z-index: 9999;
+    position: fixed;
+    width: calc(100% - 2rem);
+    top: 5rem;
+    left: 1rem;
+    right: 1rem;"></div>
+    <div class="container px-5">
+      <h2 style="text-align: center" class="mb-5">Serviceman profile</h2>
+      {% comment %} <hr class="p-0 m-0" /> {% endcomment %}
+      <div class="row justify-content-center align-items-center">
+        <div class="col-lg-4 col-md-4 d-flex justify-content-centre align-items-center">
+          <div class="img-box">
+            <img src="{{ employee.user.profile_pic.url }}" alt="" />
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 d-flex align-items-center">
+          <div class="detail-box">
+            <h5 class="mb-3">Name: {{ employee.user.fullname }}</h5>
+            <h5 class="mb-3">Phone: {{ employee.user.phone }}</h5>
+            <h5 class="mb-3">Email: {{ employee.user.email }}</h5>
+            <h5 class="mb-3">Experience: {{ employee.experience }} Years</h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-8">
+          <div class="about mt-5">
+            <h2 class="mb-3">About</h2>
+            <p>{{ employee.bio }}</p>
+          </div>
+
+          <div class="about mt-5">
+            <h2 class="mb-3">Expertise</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+        </div>
+        <div class="col border-5">
+          <h3 class="text-center mt-3">Rate Us</h3>
+          <form action="{% url 'customer:rating' %}" method="post" id="rating-from">
+            {% csrf_token %}
+            <div class="stars text-center mb-5">
+              <span onclick="gfg(1)" class="star">★</span>
+              <span onclick="gfg(2)" class="star">★</span>
+              <span onclick="gfg(3)" class="star">★</span>
+              <span onclick="gfg(4)" class="star">★</span>
+              <span onclick="gfg(5)" class="star">★</span>
+              <h3 id="output">Rating is: 0/5</h3>
+            </div>
+            <div class="form-floating">
+              <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" name="review" required></textarea>
+              <label for="floatingTextarea2">How did you like our service?</label>
+            </div>
+
+            <input type="hidden" name="rating" id="rating" />
+            <input type="hidden" name="employee" value="{{ employee.pk }}" />
+            <div class="d-flex justify-content-center my-4">
+              <button class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="p-0 m-0" />
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <h2 class="mb-5 text-center">Rating &amp; Reviews</h2>
+        </div>
+      </div>
+      {% if reviews %}
+        {% for review in reviews %}
+          <div class="row d-flex justify-content-center mb-3">
+            <div class="col">
+              <div class="card border-bottom" style="border: 0">
+                <div class="card-body p-0">
+                  <div class="row">
+                    <div class="col-lg-4 d-flex justify-content-center align-items-center mb-4 mb-lg-0">
+                      <img src="{{ review.customer.profile_pic.url }}" class="rounded-circle shadow-1" alt="woman avatar" width="150" height="150" style="object-fit: cover;" />
+                    </div>
+                    <div class="col-lg-8">
+                      <ul class="list-unstyled d-flex" style="font-size: 1.5rem;">
+                        {% for i in review.rate %}
+                          <li class="me-2">
+                            <i class="bi bi-star-fill text-warning"></i>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                      <p class="text-muted fw-light">{{ review.review }}</p>
+                      <p class="fw-bold lead mb-2">
+                        <strong>{{ review.customer.fullname }}</strong>
+                      </p>
+                      <p class="text-muted fw-light text-end">
+                        Posted on: <i>{{ review.date }}</i>
+                      </p>
+
+                      {% if review.customer == request.user %}
+                        <div class="notice_action">
+                          <div class="notice_action_btns">
+                            <a class="btn btn-primary w-100" href="">Edit</a>
+                            <a class="btn btn-danger w-100" href="" onclick="return confirm('Are you sure want to delete ?')">Delete</a>
+                          </div>
+                        </div>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No Reviews for the serviceman.</p>
+      {% endif %}
+      {% comment %}reviews{% endcomment %}
+
+      {% comment %} <div class="row d-flex justify-content-center mb-3">
+        <div class="col">
+          <div class="card border-bottom" style="border: 0">
+            <div class="card-body p-0">
+              <div class="row">
+                <div class="col-lg-4 d-flex justify-content-center align-items-center mb-4 mb-lg-0">
+                  <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20%2810%29.webp" class="rounded-circle img-fluid shadow-1" alt="woman avatar" width="150" height="150" />
+                </div>
+                <div class="col-lg-8">
+                  <ul class="list-unstyled d-flex" style="font-size: 1.5rem;">
+                    <li class="me-2">
+                      <i class="bi bi-star-fill text-warning"></i>
+                    </li>
+                    <li class="me-2">
+                      <i class="bi bi-star-fill text-warning"></i>
+                    </li>
+                    <li class="me-2">
+                      <i class="bi bi-star-fill text-warning"></i>
+                    </li>
+                    <li class="me-2">
+                      <i class="bi bi-star-fill text-warning"></i>
+                    </li>
+                    <li class="me-2">
+                      <i class="bi bi-star-half text-warning"></i>
+                    </li>
+                  </ul>
+                  <p class="text-muted fw-light">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam repudiandae unde fugit, vitae saepe iure voluptatibus sequi temporibus nostrum esse sit nam corrupti beatae repellat consequuntur ipsa aspernatur. Illum, iusto!</p>
+                  <p class="fw-bold lead mb-2">
+                    <strong>Anna Smith</strong>
+                  </p>
+                  <p class="text-muted fw-light text-end">
+                    Posted on: <i>2022-12-22</i>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> {% endcomment %}
+    </div>
+  </section>
+{% endblock %}
+
+{% block script %}
+  <script>
+    // script.js
+    
+    // To access the stars
+    let stars = document.getElementsByClassName('star')
+    let output = document.getElementById('output')
+    
+    // Funtion to update rating
+    function gfg(n) {
+      remove()
+      for (let i = 0; i < n; i++) {
+        if (n == 1) cls = 'one'
+        else if (n == 2) cls = 'two'
+        else if (n == 3) cls = 'three'
+        else if (n == 4) cls = 'four'
+        else if (n == 5) cls = 'five'
+        stars[i].className = 'star ' + cls
+      }
+      output.innerText = 'Rating is: ' + n + '/5'
+    
+      document.getElementById('rating').value = n
+    }
+    
+    // To remove the pre-applied styling
+    function remove() {
+      let i = 0
+      while (i < 5) {
+        stars[i].className = 'star'
+        i++
+      }
+    }
+    
+    /* document.addEventListener('DOMContentLoaded', function () {
+          var form = document.getElementById('rating-from')
+        
+          form.addEventListener('submit', function (e) {
+            e.preventDefault() // Prevent the default form submission
+        
+            var formData = new FormData(form)
+            form.reset()
+            remove()
+            document.getElementById('output').innerText = 'Rating is: 0/5'
+            fetch(form.action, {
+              method: form.method,
+              body: formData,
+              headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+              }
+            })
+              .then((response) => {
+                if (!response.ok) {
+                  return response.json().then((data) => {
+                    let dataMessage = data.message
+                    showAlert('alert-danger', response.statusText, data.message)
+                  })
+                }
+                return response.json()
+              })
+              .then((data) => {
+                if (data) {
+                  showAlert('alert-success', 'success', data.message)
+                }
+              })
+              .catch((error) => console.error('There was a problem with the fetch operation:', error))
+          })
+        })
+        
+        function showAlert(type, status, message) {
+          var myAlert = document.getElementById('myAlert')
+          myAlert.classList.add(type)
+          myAlert.classList.add('show')
+          myAlert.innerHTML = `<strong id>${status}</strong> ${message}`
+        
+          setTimeout(() => {
+            myAlert.classList.remove('show')
+            myAlert.classList.remove(type)
+          }, 5000)
+        } */
+  </script>
+{% endblock %}

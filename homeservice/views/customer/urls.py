@@ -18,6 +18,7 @@ urlpatterns = [
         customer_views.appointment,
         name="customer_appointment",
     ),
+    path("rating", customer_views.rating, name="rating"),
     path("myappointment", customer_views.myappointment, name="customer_appointments"),
     path("appointment/<int:appointment_id>", customer_views.cancel_appointment, name="cancel_appointment"),
     path("profile", customer_views.customer_profile, name="customer_profile"),

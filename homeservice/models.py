@@ -162,3 +162,13 @@ class Inquiry(models.Model):
 
     def __str__(self):
         return self.name    
+
+class Rating(models.Model):
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    customer = models.ForeignKey(User, on_delete=models.CASCADE)
+    rate = models.IntegerField()
+    review = models.TextField()
+    date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.customer.fullname + " - " + self.employee.user.fullname

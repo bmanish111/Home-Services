@@ -12,7 +12,7 @@
           <div class="form">
             <div>
               <div class="contact-form-wrapper d-flex justify-content-center">
-                <form action="" class="contact-form" method="post">
+                <form action="{% url "contact" %}" class="contact-form" method="post">
                   {% csrf_token %}
                   <p class="description">Feel free to contact us if you need any assistance, any help or another question.</p>
                   <div>

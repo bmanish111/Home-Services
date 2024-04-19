@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from .forms import MyForm
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib import messages
-from homeservice.models import Employee, Inquiry
+from homeservice.models import Employee, Inquiry, Rating
 
 User = get_user_model()
 
@@ -25,7 +25,39 @@ def service(request):
     return render(request, "services.html", {"services": services})
 
 
-def service_details(request, slug):
+def service_details(request, slug, employee_id=None):
+    # if employee_id is given, then the user is viewing the profile of a serviceman
+    if employee_id:
+        employee = Employee.objects.get(id=employee_id)
+        reviews = Rating.objects.filter(employee=employee)
+
+        # destructuring the reviews because we need to change the rate to a string so that we can use it in the template to iterate over the stars
+        processed_reviews = []
+        for review in reviews:
+            if review.rate == 1:
+                rate = "a"
+            elif review.rate == 2:
+                rate = "aa"
+            elif review.rate == 3:
+                rate = "aaa"
+            elif review.rate == 4:
+                rate = "aaaa"
+            elif review.rate == 5:
+                rate = "aaaaa"
+
+            review = {
+                "rate": rate,
+                "review": review.review,
+                "customer": review.customer,
+                "date": review.date,
+            }
+            processed_reviews.append(review)
+            print(review)
+        return render(
+            request,
+            "serviceman.html",
+            {"employee": employee, "reviews": processed_reviews},
+        )
     service = Service.objects.get(slug=slug)
     employees = Employee.objects.filter(job_title=service.pk)
     return render(
