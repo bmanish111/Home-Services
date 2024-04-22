@@ -1,0 +1,165 @@
+{% extends 'admin/layouts/main.html' %}
+{% load static %}
+
+{% block links %}
+<title>Admin</title>
+<style>
+  :root {
+      --red: hsl(0, 78%, 62%);
+      --cyan: hsl(180, 62%, 55%);
+      --orange: hsl(34, 97%, 64%);
+      --blue: hsl(212, 86%, 64%);
+      --varyDarkBlue: hsl(234, 12%, 34%);
+      --grayishBlue: hsl(229, 6%, 66%);
+      --veryLightGray: hsl(163, 93%, 46%);
+      --weight1: 200;
+      --weight2: 400;
+      --weight3: 600;
+  }
+
+  .card {
+      border-radius: 5px;
+      box-shadow: 0px 30px 40px -20px var(--grayishBlue);
+      padding: 30px;
+      margin: 20px;
+  }
+
+  .card-body {
+      position: relative;
+      bottom: 15px;
+
+
+  }
+
+  img {
+      align-items: center;
+  }
+
+  .card-title {
+      color: darkcyan;
+      margin-top: 0px;
+      font-size: 15px;
+      font-weight: 600;
+  }
+
+  .count {
+      text-align: center;
+      color: darkcyan;
+  }
+
+  .card-body {
+      margin-bottom: 50px;
+  }
+
+  .count1 {
+      color: darkcyan;
+      text-align: center;
+  }
+
+  .red {
+      border-top: 3px solid var(--red);
+  }
+
+  .cyan {
+      border-top: 3px solid var(--cyan);
+  }
+
+  .orange {
+      border-top: 3px solid var(--orange);
+  }
+
+  .blue {
+      border-top: 3px solid var(--blue);
+  }
+
+  .varyDarkBlue {
+      border-top: 3px solid var(--varyDarkBlue);
+  }
+
+  .veryLightGray {
+      border-top: 3px solid var(--veryLightGray);
+  }
+</style>
+{% endblock links %}
+
+{% block main_content %}
+<main id="main" class="main">
+  {% comment %} breadcrum {% endcomment %}
+  <div class="pagetitle">
+      <h1>Dashboard</h1>
+      {% comment %} <nav>
+          <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="">Home</li>
+              <li class="breadcrumb-item active">Dashboard</li>
+          </ol>
+      </nav> {% endcomment %}
+  </div>
+
+  <div class="main-content">
+      <div class="row col-12">
+          <div class="card red col-md-2 col-sm-4" style="width: 14rem; height: 10rem;">
+              <a href="">
+                  <div class="card-body ">
+                      <img class="ms-5" src="{% static 'admin/img/students.png'%}" height="50px"
+                          width="50px" alt="">
+                      <h5 class="card-title ms-3">Total Customer</h5>
+                      <h5 class="count">108</h5>
+                  </div>
+              </a>
+          </div>
+          <div class="card cyan col-md-2 col-sm-4" style="width: 14rem; height: 10rem;">
+              <a href="">
+                  <div class="card-body ">
+                      <img class="ms-5" src="{% static 'admin/img/instructor.png'%}" height="50px"
+                          width="50px" alt="">
+
+                      <h5 class="card-title ms-3">Total Employee</h5>
+                      <h5 class="count">{{ total_teachers }}</h5>
+                  </div>
+              </a>
+          </div>
+          <div class="card orange col-md-2 col-sm-4" style="width: 14rem; height: 10rem;">
+              <a href="">
+              <div class="card-body">
+                  <a class="mb-0" href=""
+                          src="{% static 'admin/img/education.png'%}" height="50px" width="50px"
+                          alt="">
+                      <h5 class="card-title ms-3">Total Service</h5>
+                      <h5 class="count">{{ total_faculties }}</h5>
+              </div>
+              </a>
+          </div>
+          <div class="card blue col-md-2 col-sm-4" style="width: 14rem; height: 10rem;">
+              <a href="">
+                  <div class="card-body mb-5">
+                      <img class="ms-5" src="{% static 'admin/img/instructor.png'%}" height="50px"
+                          width="50px" alt="">
+                      <p class="card-title ms-3">Appointment</p>
+                      <h5 class="count1">{{ current_academic_year_teachers }}</h5>
+                  </div>
+              </a>
+          </div>
+          <div class="card varyDarkBlue col-md-2 col-sm-4" style="width: 14rem; height: 10rem;">
+              <a href="">
+                  <div class="card-body mb-5">
+                      <img class="ms-5" src="{% static 'admin/img/students.png'%}" height="50px"
+                          width="50px" alt="">
+                      <p class="card-title ms-3">New inquiry</p>
+                      <h5 class="count1 ">{{ current_academic_year_students }}</h5>
+                  </div>
+              </a>
+          </div>
+          <div class="card varyDarkBlue col-md-2 col-sm-4" style="width: 14rem; height: 10rem;">
+              <a href="">
+                  <div class="card-body mb-5">
+                      <img class="ms-5" src="{% static 'admin/img/students.png'%}" height="50px"
+                          width="50px" alt="">
+                      <p class="card-title ms-3" style="white-space:nowrap;">New Application</p>
+                      <h5 class="count1 ">{{ total_application }}</h5>
+                  </div>
+              </a>
+          </div>
+      </div>
+  </div>
+</main>
+{% endblock %}

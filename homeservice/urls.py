@@ -13,15 +13,15 @@ urlpatterns = [
         name="service_details",
     ),
     path("contact", views.contact, name="contact"),
-
     # Authentication
     path("login", views.login_page, name="login"),
     path("signup", views.register_page, name="signup"),
     path("logout", views.logout_user, name="logout"),
-
     # Customer
     path("customer/", include("homeservice.views.customer.urls")),
     # Employee
     path("employee/", include("homeservice.views.employee.urls")),
     path("complete", views.complete_profile),
+    # Admin
+    path("admin/", include("homeservice.views.admin.urls")),
 ]

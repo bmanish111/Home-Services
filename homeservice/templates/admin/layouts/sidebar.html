@@ -1,0 +1,244 @@
+<aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+            <a class="nav-link " href="">
+                <i class="bi bi-grid"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        {% comment %} Teacher {% endcomment %}
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="">
+                <i class="bi bi-menu-button-wide"></i><span>Employee</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="">
+                        <i class="bi bi-circle"></i><span>Add Employee</span>
+                    </a>
+                </li>
+                <li> <a href=""><i class="bi bi-circle"></i><span>View Employee</span> </a>
+                </li>
+                <li> <a href=""><i class="bi bi-circle"></i><span>Employee Verification</span> </a>
+                </li>
+            </ul>
+        </li>
+
+        {% comment %} Student Dropdown {% endcomment %}
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#students-nav" data-bs-toggle="collapse" href=""> <i
+                    class="bi bi-journal-text"></i><span>Customer</span><i class="bi bi-chevron-down ms-auto"></i> </a>
+            <ul id="students-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="">
+                        <i class="bi bi-circle"></i><span>Add Customer</span>
+                    </a>
+                </li>
+                {% comment %} <li>
+                    <a href="">
+                        <i class="bi bi-circle"></i><span>Assign Customer</span>
+                    </a>
+                </li> {% endcomment %}
+                <li>
+                    <a href="">
+                        <i class="bi bi-circle"></i><span>View Customer</span>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+
+        {% comment %} Notice {% endcomment %}
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="">
+                <i class="bi bi-layout-text-window-reverse"></i>
+                <span>Service</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="">
+                        <i class="bi bi-circle"></i><span>Add Service</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <i class="bi bi-circle"></i><span>View Service</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        {% comment %} Attendance {% endcomment %}
+        {% comment %} <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#attendance-nav" data-bs-toggle="collapse" href="">
+                <i class="bi bi-bar-chart"></i><span>Attendance</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="attendance-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="">
+                        <i class="bi bi-circle"></i><span>View Attendance</span>
+                    </a>
+                </li>
+
+            </ul>
+        </li> {% endcomment %}
+
+        {% comment %} Applicant {% endcomment %}
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#application-nav" data-bs-toggle="collapse" href="">
+                <i class="bi bi-file-earmark-pdf"></i>
+                <span>Applicants</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="application-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="">
+                        <i class="bi bi-circle"></i><span>View Applicants List</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
+        {% comment %} Admin Setup {% endcomment %}
+        {% comment %} <li class="nav-heading">Admin Setup</li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="">
+                <i class="bi bi-person"></i>
+                <span>Academic Year</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="">
+                <i class="bi bi-person"></i>
+                <span>Semester</span>
+            </a>
+        </li> {% endcomment %}
+
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#messages-nav" data-bs-toggle="collapse" href="">
+                <i class="bi bi-layout-text-window-reverse"></i>
+                <span>Message</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="messages-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="">
+                        <i class="bi bi-circle"></i><span>Unread Message</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <i class="bi bi-circle"></i><span>Read Message</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        {% comment %} manage site section {% endcomment %}
+        <li class="nav-heading">Manage Sites</li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#site_news" data-bs-toggle="collapse" href="">
+                <i class="bi bi-person"></i>
+                <span>FAQs</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="site_news" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li> <a href=""></i><span>Add FAQs</span> </a></li>
+                <li> <a href=""></i><span>View FAQs</span> </a></li>
+            </ul>
+        </li>
+        {% comment %} <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#site_gallery" data-bs-toggle="collapse" href="">
+                <i class="bi bi-person"></i>
+                <span>Slidder</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="site_gallery" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li> <a href=""></i><span>Add Images</span> </a></li>
+                <li> <a href=""></i><span>View Images</span> </a></li>
+            </ul>
+        </li> {% endcomment %}
+
+        {% comment %} <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#site_buttons" data-bs-toggle="collapse" href="">
+                <i class="bi bi-person"></i>
+                <span>Show/Hide Menus</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="site_buttons" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <li>
+                    @php
+                        $is_disabled = DB::table('site_buttons')
+                            ->where('button_name', 'Apply')
+                            ->first()->disabled;
+                    @endphp
+                    <a>
+                        <i class="bi bi-circle"></i>
+                        <div class="form-check form-switch d-flex ps-0 w-100 justify-content-between">
+                            <label class="form-check-label d-block" for="site_apply_button">Apply Button</label>
+                            <input class="form-check-input me-3" type="checkbox" role="switch"
+                                id="site_apply_button" @if (!$is_disabled) {{ 'checked' }} @endif>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </li> {% endcomment %}
+
+
+
+        <li class="nav-heading">Pages</li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="">
+                <i class="bi bi-person"></i>
+                <span>Profile</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="">
+                <i class="bi bi-box-arrow-in-right"></i>
+                <span>Sign Out</span>
+            </a>
+        </li>
+
+    </ul>
+</aside>
+
+
+{% comment %} <script>
+    console.log("side bar");
+
+    let site_apply_button = document.querySelector("#site_apply_button");
+    console.log(site_apply_button);
+
+    // site_apply_button.onclick = () => {
+    //     console.log("clicked");
+    //     if(!site_apply_button.)
+    // }
+    site_apply_button.onchange = () => {
+        // console.log("changed");
+        if (site_apply_button.checked) {
+            // console.log("checked");
+            const url = location.origin + "/admin/site/disable/Apply/0";
+            fetch(url).then(response => response.json()).then(response => {
+                console.log(response);
+            });
+        } else {
+            // $confirmation = confirm("Are you sure want to disable the Apply Menu from the site ?");
+            // if ($confirmation) {
+            const url = location.origin + "/admin/site/disable/Apply/1";
+            fetch(url).then(response => response.json()).then(response => {
+                console.log(response);
+            });
+            // } else {
+            //     console.log(site_apply_button.value);
+            //     // site_apply_button.setAttribute('checked', '');
+            // }
+            // console.log($confirmation);
+        }
+    }
+</script> {% endcomment %}
