@@ -84,9 +84,23 @@ class User(AbstractBaseUser, PermissionsMixin):
         return True
 
 
+class Service(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    image = models.ImageField(upload_to="service_images/")
+    slug = models.SlugField(unique=True)
+
+    # def save(self, *args, **kwargs):
+    #     self.slug = slugify(self.name)
+    #     super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    job_title = models.CharField(max_length=200)
+    job_title = models.ForeignKey(Service, on_delete=models.CASCADE)
     experience = models.IntegerField()
     bio = models.TextField()
     previous_work = models.TextField()
@@ -114,20 +128,6 @@ class Employee(models.Model):
 
     def __str__(self):
         return self.user.fullname
-
-
-class Service(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField()
-    image = models.ImageField(upload_to="service_images/")
-    slug = models.SlugField(unique=True)
-
-    # def save(self, *args, **kwargs):
-    #     self.slug = slugify(self.name)
-    #     super().save(*args, **kwargs)
-
-    def __str__(self):
-        return self.name
 
 
 class Appointment(models.Model):
@@ -163,7 +163,8 @@ class Inquiry(models.Model):
     is_read = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.name    
+        return self.name
+
 
 class Rating(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
@@ -174,6 +175,7 @@ class Rating(models.Model):
 
     def __str__(self):
         return self.customer.fullname + " - " + self.employee.user.fullname
+
 
 class FAQ(models.Model):
     question = models.CharField(max_length=200)

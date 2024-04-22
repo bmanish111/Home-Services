@@ -1,0 +1,113 @@
+{% extends 'admin/layouts/main.html' %}
+{% load static %}
+
+{% block links %}
+  <title>Verify Employee</title>
+{% endblock %}
+
+{% block main_content %}
+  {% include 'components/message.html' %}
+
+  <main id="main" class="main">
+    <div class="main-content" style="border:  0px solid red;">
+      <div class="table-responsive shadow-lg p-2 mb-5 rounded">
+        <h2 class="text-uppercase text-center py-2" style="font-family:Times New Roman, Times, serif">Employee Verification</h2>
+
+        <form class="row g-3 needs-validation mt-3" method="POST" enctype="multipart/form-data" action="{% url 'admin_dashboard:employee_verification' employee_id=employee.pk %}">
+          {% csrf_token %}
+          <div class="form-section-container border rounded p-0">
+            {% comment %} <h4 class="info-title p-3 text-white rounded-top">Personal Information</h4> {% endcomment %}
+
+            <div class="wapper p-3">
+              <div class="row g-3">
+                {% comment %}first name{% endcomment %}
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                  <label for="fullname" class="form-label">Full Name</label>
+                  <input type="text" class="form-control" name="fullname" id="fullname" value="{{ employee.user.fullname }}" disabled />
+                </div>
+
+                {% comment %}Email{% endcomment %}
+                <div class="col-lg-3 col-md-4" id="edit">
+                  <label for="email" class="form-label">Email Adress</label>
+                  <input type="email" class="form-control" name="email" id="email" value="{{ employee.user.email }}" disabled />
+                </div>
+
+                {% comment %}Contact{% endcomment %}
+                <div class="col-md-3 col-sm-6" id="edit">
+                  <label for="contact" class="form-label">Contact number</label>
+                  <input type="text" class="form-control" name="phone" id="contact" value="{{ employee.user.phone }}" disabled />
+                </div>
+
+                {% comment %}last name{% endcomment %}
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                  <label for="address" class="form-label">Address</label>
+                  <input type="text" class="form-control" name="address" id="address" value="{{ employee.user.address }}" disabled />
+                </div>
+
+                {% comment %}Gender{% endcomment %}
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                  <label for="gender" class="form-label">Gender</label>
+                  <select class="form-select text-start" name="gender" id="gender" disabled>
+                    <option selected disabled value="{{ employee.user.gender }}">{{ employee.user.gender }}</option>
+                  </select>
+                </div>
+
+                {% comment %}Degree{% endcomment %}
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                  <label for="service" class="form-label">Service</label>
+                  <select class="form-select text-start" name="service" id="service" disabled>
+                    <option selected disabled value="{{ employee.job_title }}">{{ employee.job_title }}</option>
+                  </select>
+                </div>
+
+                {% comment %}Level{% endcomment %}
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                  <label for="experience" class="form-label">Experience (in Year)</label>
+                  <input type="number" class="form-control" name="experience" id="experience" value="{{ employee.experience }}" disabled />
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                  <label for="id_type" class="form-label">ID Type</label>
+                  <select class="form-select text-start" name="id_type" id="id_type" disabled>
+                    <option selected disabled value="{{ employee.id_type }}">{{ employee.id_type }}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row mt-3 g-3">
+                <div class="col-lg-4 col-md-6 col-sm-6 mt-3">
+                  <label for="about" class="form-label">Bio</label>
+                  <textarea type="text" class="form-control" id="about" name="bio" rows="3" placeholder="Write about your self" disabled>{{ employee.bio }}</textarea>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 mt-3">
+                  <label for="previous_work" class="form-label">Previous Work</label>
+                  <textarea type="text" class="form-control" id="previous_work" name="previous_work" rows="3" placeholder="Descrive your previous work" disabled>{{ employee.previous_work }}</textarea>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 mt-3">
+                  <label for="previous_experience" class="form-label">Experience</label>
+                  <textarea type="text" class="form-control" id="previous_experience" name="previous_experience" rows="3" placeholder="Write your previous experience" disabled>{{ employee.previous_experience }}</textarea>
+                </div>
+              </div>
+
+              <div class="row mt-3 g-3">
+                <div class="col-lg-4 col-md-6 col-sm-6 mt-3">
+                  <label for="profilePicture" class="form-label">Recently Captured PP Size Picture</label>
+                  <img src="{{ employee.user.profile_pic.url }}" class="img-thumbnail mb-2" alt="..." style="border-radius: 0.5rem;" id="profilePicturePreview" />
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-6 mt-3">
+                  <label for="picture_of_id" class="form-label">Picture of ID</label>
+                  <img src="{{ employee.id_image.url }}" class="img-thumbnail mb-2" alt="..." style="border-radius: 0.5rem;" id="picture_of_id_preview" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button class="btn btn-success me-md-2 mb-4" type="submit">Click to Verify</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+{% endblock %}

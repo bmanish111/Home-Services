@@ -1,0 +1,63 @@
+{% extends 'admin/layouts/main.html' %}
+{% load static %}
+
+{% block links %}
+  <title>Employee Applications</title>
+  <style>
+    td span {
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+    }
+    
+    .create_profile:hover {
+      border-radius: 0.5rem;
+      background: rgb(204, 204, 204);
+      transition: 0.25s;
+    }
+  </style>
+{% endblock %}
+
+{% block main_content %}
+  {% include 'components/message.html' %}
+  <main id="main" class="main">
+    <div class="main-content" style="border:  0px solid red;">
+      <div class="table-responsive shadow-lg p-2 mb-5 rounded">
+        <h2 class="text-uppercase text-center py-2" style="font-family:Times New Roman, Times, serif">Employee Applications</h2>
+        <table class="table table-striped table-hover border border-dark border-3">
+          <thead>
+            <tr class="p-3 mb-5 rounded border border-dark border-3">
+              <th>SN</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Address</th>
+              <th>Phone</th>
+              <th>Service</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if employees %}
+              {% for employee in employees %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ employee.user.fullname }}</td>
+                  <td>{{ employee.user.email }}</td>
+                  <td>{{ employee.user.address }}</td>
+                  <td>{{ employee.user.phone }}</td>
+                  <td>{{ employee.job_title }}</td>
+                  <td>
+                    <a href="{% url "admin_dashboard:employee_application" employee_id=employee.pk %}" class="btn-primary btn text-white" style="text-decoration:none; width: 5rem; margin: 0.125rem;">View</a>
+                  </td>
+                </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="10">No Applicants Found</td>
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+{% endblock %}
