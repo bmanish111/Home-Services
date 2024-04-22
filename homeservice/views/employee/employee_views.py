@@ -118,3 +118,45 @@ def reviews(request):
         processed_reviews.append(review)
 
     return render(request, "employee/reviews.html", {"reviews": processed_reviews})
+
+
+@role_required("employee")
+def profile(request):
+
+    if (
+        request.method == "POST"
+        and request.POST.get("update_password") == "Update Password"
+    ):
+        current_password = request.POST["current_password"]
+        new_password = request.POST["new_password"]
+        confirm_password = request.POST["confirm_password"]
+        if not request.user.check_password(current_password):
+            messages.error(request, "Invalid current password!")
+        else:
+            if new_password != confirm_password:
+                messages.error(request, "Passwords do not match!")
+            else:
+                request.user.set_password(new_password)
+                request.user.save()
+                messages.success(request, "Password updated successfully!")
+        return redirect("employee:employee_profile")
+
+    elif (
+        request.method == "POST"
+        and request.POST.get("update_profile") == "Update Profile"
+    ):
+        employee = Employee.objects.get(user=request.user)
+        bio = request.POST.get("bio")
+        previous_work = request.POST.get("previous_work")
+        previous_experience = request.POST.get("previous_experience")
+        messages.success(request, "Profile updated successfully!")
+
+        employee.bio = bio
+        employee.previous_work = previous_work
+        employee.previous_experience = previous_experience
+        employee.save()
+
+        return redirect("employee:employee_profile")
+
+    employee = Employee.objects.get(user=request.user)
+    return render(request, "employee/profile.html", {"employee": employee})

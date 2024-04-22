@@ -89,6 +89,8 @@ class Employee(models.Model):
     job_title = models.CharField(max_length=200)
     experience = models.IntegerField()
     bio = models.TextField()
+    previous_work = models.TextField()
+    previous_experience = models.TextField()
     is_doc_uploaded = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
 

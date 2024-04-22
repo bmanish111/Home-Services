@@ -19,4 +19,5 @@ urlpatterns = [
     ),
 
     path("reviews/", employee_views.reviews, name="employee_reviews"),
+    path("profile", employee_views.profile, name="employee_profile"),
 ]
