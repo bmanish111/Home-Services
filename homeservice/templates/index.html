@@ -69,6 +69,31 @@
   {% include 'components/about.html' %}
   {% include 'components/contact.html' %}
 
+  <section class="layout_padding-bottom">
+    <div class="container">
+      <h2 style="text-align: center" class="mb-5">FAQs</h2>
+      <div class="accordion" id="FAQs">
+        {% if FAQs %}
+          {% for item in FAQs %}
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="item-{{ item.pk }}"><button class="accordion-button {% if not forloop.first %}{{ 'collapsed' }}{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ item.pk }}" aria-expanded="false" aria-controls="collapse-{{ item.pk }}"><b>{{ item.question }}</b></button></h2>
+              <div id="collapse-{{ item.pk }}" class="accordion-collapse collapse {% if forloop.first %}{{ 'show' }}{% endif %}" aria-labelledby="item-{{ item.pk }}" data-bs-parent="#FAQs">
+                <div class="accordion-body">
+                  <strong>Ans:</strong> {{ item.answer }}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="alert alert-warning" role="alert">No FAQs found.</div>
+        {% endif %}
+      </div>
+
+      <div class="blank mt-5 pt-5"></div>
+      <hr class="p-0 m-0" />
+    </div>
+  </section>
+
   {% comment %}Map{% endcomment %}
   <section class="section layout_padding-bottom">
     <div class="container">

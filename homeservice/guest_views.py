@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from .forms import MyForm
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib import messages
-from homeservice.models import Employee, Inquiry, Rating
+from homeservice.models import Employee, Inquiry, Rating, FAQ
 
 User = get_user_model()
 
@@ -13,7 +13,8 @@ from homeservice.decorators import anonymous_required
 # Create your views here.
 def home(request):
     services = Service.objects.all()
-    return render(request, "index.html", {"services": services})
+    FAQs = FAQ.objects.all()
+    return render(request, "index.html", {"services": services, "FAQs": FAQs})
 
 
 def about(request):
