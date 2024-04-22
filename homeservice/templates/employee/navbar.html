@@ -15,7 +15,7 @@
             <a href="/employee/home" class="nav-link">Reviews</a>
           </li>
           <li>
-            <a class="nav-link" href="{% url "employee:employee_appointment" %}">My Appointment</a>
+            <a class="nav-link" href="{% url 'employee:employee_appointment' %}">My Appointment</a>
           </li>
         </ul>
         <li class="nav-item dropdown" style="list-style-type: none;">
@@ -30,13 +30,13 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li>
-              <a class="dropdown-item" href="{% url 'customer:customer_profile' %}"><i class="bi bi-person"></i> My Profile</a>
+              <a class="dropdown-item" href="{% url 'employee:employee_profile' %}"><i class="bi bi-person"></i> My Profile</a>
             </li>
             <li>
               <hr class="dropdown-divider" />
             </li>
             <li>
-              <a class="dropdown-item" href="/employee/logout"><i class="bi bi-box-arrow-right"></i> Log Out</a>
+              <a class="dropdown-item" href="/logout"><i class="bi bi-box-arrow-right"></i> Log Out</a>
             </li>
           </ul>
         </li>

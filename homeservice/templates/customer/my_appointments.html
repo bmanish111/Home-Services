@@ -59,9 +59,11 @@
                           {{ item.status }}
                         </span>
                       </td>
-                      <td class="text-danger fs-6">
-                        <a href="{% url 'customer:cancel_appointment' item.id %}" class="text-danger" onclick="return confirm('Are you sure want to cancel appointment ?')"><i class="bi bi-x-lg"></i></a>
-                      </td>
+                      {% if item.status == 'Pending' %}
+                        <td class="text-danger fs-6">
+                          <a href="{% url 'customer:cancel_appointment' item.id %}" class="text-danger" onclick="return confirm('Are you sure want to cancel appointment ?')"><i class="bi bi-x-lg"></i></a>
+                        </td>
+                      {% endif %}
                     </tr>
                   {% endfor %}
                 {% else %}

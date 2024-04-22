@@ -36,8 +36,8 @@
             <table class="table table-responsive-xl">
               <thead>
                 <tr>
-                  <th>Service</th>
-                  <th>Service Man</th>
+                  <th>Customer</th>
+                  <th>Problem</th>
                   <th>Date</th>
                   <th>Time</th>
                   <th>Contact</th>
@@ -48,16 +48,16 @@
                 {% if appointments %}
                   {% for item in appointments %}
                     <tr class="alert" role="alert">
-                      <td>{{ item.service.name }}</td>
                       <td class="d-flex align-items-center">
-                        <div class="img" style="background-image: url('{{ item.employee.user.profile_pic.url }}');"></div>
+                        <div class="img" style="background-image: url('{{ item.customer.profile_pic.url }}');"></div>
                         <div class="pl-3 name">
-                          <span>{{ item.employee.user.fullname }}</span>
+                          <span>{{ item.customer.fullname }}</span>
                         </div>
                       </td>
+                      <td>{{ item.problem }}</td>
                       <td>{{ item.date }}</td>
                       <td>{{ item.time }}</td>
-                      <td>{{ item.employee.user.phone }}</td>
+                      <td>{{ item.customer.phone }}</td>
                       <td class="status">
                         <span class="
                         {% if item.status == 'Pending' %}

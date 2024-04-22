@@ -62,8 +62,8 @@
                         <span class="
                         {% if item.status == 'Pending' %}
                             {{ 'waiting' }}
-                          {% elif item.status == 'Accepted' %}
-                            {{ 'accepted' }}
+                          {% elif item.status == 'Approved' %}
+                            {{ 'active' }}
                           {% elif item.status == 'Completed' %}
                             {{ 'completed' }}
                           {% elif item.status == 'Rejected' %}

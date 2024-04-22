@@ -12,4 +12,9 @@ urlpatterns = [
         employee_views.appointment,
         name="employee_appointment",
     ),
+    path(
+        "appointment/<int:appointment_id>/complete",
+        employee_views.appointment_completed,
+        name="employee_appointment_completed",
+    ),
 ]
