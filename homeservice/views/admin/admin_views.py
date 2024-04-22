@@ -36,7 +36,7 @@ def employee(request):
         form = MyForm(request.POST, request.FILES)
 
         if form.is_valid():
-            print
+
             user = User.objects.create_user(
                 email=email,
                 fullname=fullname,
@@ -50,7 +50,7 @@ def employee(request):
             print("user created successfully")
             employee = Employee.objects.create(
                 user=user,
-                job_title=job_title,
+                job_title=Service.objects.get(id=job_title),
                 experience=experience,
                 bio=bio,
                 previous_work=previous_work,
@@ -135,3 +135,45 @@ def employee_verification(request, employee_id):
         employee.user.save()
         messages.success(request, "Employee verified successfully")
         return redirect("admin_dashboard:employee_application")
+
+
+# employee edit
+def employee_edit(request, employee_id):
+    employee = Employee.objects.get(id=employee_id)
+    if request.method == "POST":
+        print(request.POST)
+        employee.user.fullname = request.POST.get("fullname")
+        employee.user.address = request.POST.get("address")
+        # employee.user.gender = request.POST.get("gender")
+        employee.job_title = Service.objects.get(id=request.POST.get("service"))
+        employee.experience = request.POST.get("experience")
+        employee.id_type = request.POST.get("id_type")
+        employee.bio = request.POST.get("bio")
+        employee.previous_work = request.POST.get("previous_work")
+        employee.previous_experience = request.POST.get("previous_experience")
+        if request.FILES.get("profile_pic"):
+            employee.user.profile_pic = request.FILES["profile_pic"]
+        if request.FILES.get("picture_of_id"):
+            employee.id_image = request.FILES["picture_of_id"]
+        employee.user.save()
+        employee.save()
+
+        messages.success(request, "Employee updated successfully")
+        return redirect("admin_dashboard:employee")
+
+    services = Service.objects.all()
+    return render(
+        request,
+        "admin/employee_create.html",
+        {"employee": employee, "services": services},
+    )
+    return HttpResponse("Employee edit page")
+
+
+# employee delete
+def employee_delete(request, employee_id):
+    employee = Employee.objects.get(id=employee_id)
+    employee.user.delete()
+    employee.delete()
+    messages.success(request, "Employee deleted successfully")
+    return redirect("admin_dashboard:employee")

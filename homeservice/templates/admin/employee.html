@@ -113,19 +113,19 @@
                     <button class="no_bg no_outline table_option-menu"><img src="{% static 'admin/img/ic_options.svg' %}" alt="options menu" /></button>
 
                     <div class="table_action_options shadow p-3 rounded flex direction-col">
-                      <button name="edit" class="no_bg no_outline my-2">
+                      <button name="edit" class="no_bg no_outline my-2" onclick="window.location.href='{% url 'admin_dashboard:employee_edit' employee_id=employee.pk %}'">
                         <div class="d-flex justify-content-start align-items-center">
                           <img src="{% static 'admin/img/ic_edit.svg' %}" alt="edit icon" />
                           <p class="mb-0 ms-2">Edit</p>
                         </div>
                       </button>
-                      <button name="edit" class="no_bg no_outline my-2">
+                      {% comment %} <button name="edit" class="no_bg no_outline my-2">
                         <div class="d-flex justify-content-start align-items-center">
                           <img src="{% static 'admin/img/ic_view.svg' %}" alt="edit icon" />
                           <p class="mb-0 ms-2">View</p>
                         </div>
-                      </button>
-                      <button name="edit" class="no_bg no_outline my-2">
+                      </button> {% endcomment %}
+                      <button name="edit" class="no_bg no_outline my-2" onclick="if(confirm('Are you sure want to delete {{ employee.user.fullname }} ?')){window.location.href='{% url 'admin_dashboard:employee_delete' employee_id=employee.pk %}'}">
                         <div class="d-flex justify-content-start align-items-center">
                           <img src="{% static 'admin/img/ic_delete.svg' %}" alt="edit icon" style="width: 24px;
                             height: 20px;" />

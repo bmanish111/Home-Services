@@ -64,7 +64,13 @@
           </div>
         {% endif %}
 
-        <form class="row g-3 needs-validation mt-3" method="POST" enctype="multipart/form-data" action="{% url 'admin_dashboard:employee_create' %}">
+        <form class="row g-3 needs-validation mt-3" method="POST" enctype="multipart/form-data" 
+          {% if employee %}
+            action="{% url 'admin_dashboard:employee_edit' employee.id %}"
+          {% else %}
+            action="{% url 'admin_dashboard:employee_create' %}"
+          {% endif %}
+          >
           {% csrf_token %}
 
           {% comment %}@if (isset(teacher) && request()_route()_uri != 'admin/applicant/{id}/createProflile') @method('PUT') @endif{% endcomment %}
@@ -78,7 +84,7 @@
                 {% comment %}first name{% endcomment %}
                 <div class="col-lg-3 col-md-4 col-sm-6">
                   <label for="fullname" class="form-label">Full Name <span>*</span></label>
-                  <input type="text" class="form-control" name="fullname" id="fullname" value="{{ form.data.fullname }}" required />
+                  <input type="text" class="form-control" name="fullname" id="fullname" value="{% if employee %}{{employee.user.fullname}}{% else %}{{ form.data.fullname }}{% endif %}" requiredd />
                   {% if form.errors.fullname %}
                     <label for="contact" class="text-danger">{{ form.fullname.errors.0 }}</label>
                   {% endif %}
@@ -87,7 +93,7 @@
                 {% comment %}Email{% endcomment %}
                 <div class="col-lg-3 col-md-4" id="edit">
                   <label for="email" class="form-label">Email Adress <span>*</span></label>
-                  <input type="email" class="form-control" name="email" id="email" value="{{ form.data.email }}" required />
+                  <input type="email" class="form-control" name="email" id="email" value="{% if employee %}{{employee.user.email}}{% else %}{{ form.data.email }}{% endif %}" {% if employee %}disabled{% endif %} requiredd />
                   {% if form.errors.email %}
                     <label for="contact" class="text-danger">{{ form.email.errors.0 }}</label>
                   {% endif %}
@@ -96,7 +102,7 @@
                 {% comment %}Contact{% endcomment %}
                 <div class="col-md-3 col-sm-6" id="edit">
                   <label for="contact" class="form-label">Contact number <span>*</span></label>
-                  <input type="text" class="form-control" name="phone" id="contact" value="{{ form.data.phone }}" required />
+                  <input type="text" class="form-control" name="phone" id="contact" value="{% if employee %}{{employee.user.phone}}{% else %}{{ form.data.phone }}{% endif %}" {% if employee %}disabled{% endif %} requiredd />
                   {% if form.errors.phone %}
                     <label for="contact" class="text-danger">{{ form.phone.errors.0 }}</label>
                   {% endif %}
@@ -105,27 +111,36 @@
                 {% comment %}last name{% endcomment %}
                 <div class="col-lg-3 col-md-4 col-sm-6">
                   <label for="address" class="form-label">Address<span>*</span></label>
-                  <input type="text" class="form-control" name="address" id="address" value="{{ form.data.address }}" required />
+                  <input type="text" class="form-control" name="address" id="address" value="{% if employee %}{{employee.user.address}}{% else %}{{ form.data.address }}{% endif %}" requiredd />
                 </div>
 
                 {% comment %}Gender{% endcomment %}
                 <div class="col-lg-3 col-md-4 col-sm-6">
                   <label for="gender" class="form-label">Gender <span>*</span></label>
-                  <select class="form-select text-start" name="gender" id="gender" required>
+                  <select class="form-select text-start" name="gender" id="gender" requiredd>
                     <option selected disabled value>Select</option>
-                    <option value="Male" {% if form.data.gender == "Male" %}selected{% endif %}>Male</option>
-                    <option value="Female"  {% if form.data.gender == "Female" %}selected{% endif %}>Female</option>
-                    <option value="Other"  {% if form.data.gender == "Other" %}selected{% endif %}>Other</option>
+                    <option value="Male"
+                    {% if employee and employee.user.gender == "Male" %}selected{% elif form.data.gender == "Male" %}selected{% endif %}>Male</option>
+
+                    <option value="Female"
+                    {% if employee and employee.user.gender == "Female" %}selected{% elif form.data.gender == "Female" %}selected{% endif %}>Female</option>
+
+                    <option value="Other"
+                    {% if employee and employee.user.gender == "Other" %}selected{% elif form.data.gender == "Other" %}selected{% endif %}>Other</option>
                   </select>
                 </div>
 
                 {% comment %}Degree{% endcomment %}
                 <div class="col-lg-3 col-md-4 col-sm-6">
                   <label for="service" class="form-label">Service <span>*</span></label>
-                  <select class="form-select text-start" name="service" id="service" required>
+                  <select class="form-select text-start" name="service" id="service" requiredd>
                     <option selected disabled value>Select</option>
                     {% for item in services %}
-                      <option value="{{ item.pk }}">{{ item.name }}
+                    <option value="{{ item.pk }}"
+                    {% if employee and employee.job_title.pk == item.pk %}selected{% elif form.data.service == item.pk %}selected{% endif %}>
+                      {{ item.name }}
+                      {% comment %} <option value="{{ item.pk }}">{{ item.name }} {% endcomment %}
+                      {% comment %} <option value="{{ item.pk }}">{{ item.name }} {% endcomment %}
                     </option>
                     {% endfor %}
                   </select>
@@ -134,16 +149,25 @@
                 {% comment %}Level{% endcomment %}
                 <div class="col-lg-3 col-md-4 col-sm-6">
                   <label for="experience" class="form-label">Experience (in Year) <span>*</span></label>
-                  <input type="number" class="form-control" name="experience" id="experience" value="{{ form.data.experience }}" required />
+                  <input type="number" class="form-control" name="experience" id="experience" value="{% if employee %}{{employee.experience}}{% else %}{{ form.data.experience }}{% endif %}" requiredd />
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
                   <label for="id_type" class="form-label">ID Type <span>*</span></label>
-                  <select class="form-select text-start" name="id_type" id="id_type" required>
+                  <select class="form-select text-start" name="id_type" id="id_type" requiredd>
                     <option selected disabled value>Select ID Type</option>
-                    <option value="passport" {% if form.data.id_type == "passport" %}selected{% endif %}>Passport</option>
-                    <option value="driving_license" {% if form.data.id_type == "driving_license" %}selected{% endif %}>Driving License</option>
-                    <option value="national_id" {% if form.data.id_type == "national_id" %}selected{% endif %}>National ID</option>
+                    <option value="passport" 
+                    {% if employee and employee.id_type == "passport" %}selected {% elif form.data.id_type == "passport" %}{% endif %}
+                    > Passport</option>
+                    {% comment %} {% if form.data.id_type == "passport" %}selected{% endif %}>Passport</option> {% endcomment %}
+                    <option value="driving_license" 
+                    {% if employee and employee.id_type == "driving_license" %}selected {% elif form.data.id_type == "driving_license" %}{% endif %}
+                    > Driving License</option>
+                    {% comment %} {% if form.data.id_type == "driving_license" %}selected{% endif %}>Driving License</option> {% endcomment %}
+                    <option value="national_id" 
+                    {% if employee and employee.id_type == "national_id" %}selected {% elif form.data.id_type == "national_id" %}{% endif %}
+                    > National ID</option>
+                    {% comment %} {% if form.data.id_type == "national_id" %}selected{% endif %}>National ID</option> {% endcomment %}
                   </select>
                 </div>
               </div>
@@ -151,15 +175,15 @@
               <div class="row mt-3 g-3">
                 <div class="col-lg-4 col-md-6 col-sm-6 mt-3">
                   <label for="about" class="form-label">Bio <span>*</span></label>
-                  <textarea type="text" class="form-control" id="about" name="bio" rows="3" placeholder="Write about your self" required>{{ form.data.bio }}</textarea>
+                  <textarea type="text" class="form-control" id="about" name="bio" rows="3" placeholder="Write about your self" requiredd>{% if employee %}{{employee.bio}}{% else %}{{ form.data.bio }}{% endif %}</textarea>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-6 mt-3">
                   <label for="previous_work" class="form-label">Previous Work <span>*</span></label>
-                  <textarea type="text" class="form-control" id="previous_work" name="previous_work" rows="3" placeholder="Descrive your previous work" required>{{ form.data.previous_work }}</textarea>
+                  <textarea type="text" class="form-control" id="previous_work" name="previous_work" rows="3" placeholder="Descrive your previous work" requiredd>{% if employee %}{{employee.previous_work}} {% else %} {{ form.data.previous_work }} {% endif %}</textarea>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-6 mt-3">
                   <label for="previous_experience" class="form-label">Experience <span>*</span></label>
-                  <textarea type="text" class="form-control" id="previous_experience" name="previous_experience" rows="3" placeholder="Write your previous experience" required>{{ form.data.previous_experience }}</textarea>
+                  <textarea type="text" class="form-control" id="previous_experience" name="previous_experience" rows="3" placeholder="Write your previous experience" requiredd>{% if employee %}{{employee.previous_experience}} {% else %} {{ form.data.previous_experience }} {% endif %}</textarea>
                 </div>
               </div>
 
@@ -169,8 +193,9 @@
                     Recently Captured PP Size Picture
                     <span>*</span>
                   </label>
-                  <img src="" class="img-thumbnail mb-2" alt="..." style="border-radius: 0.5rem;" id="profilePicturePreview" />
-                  <input type="file" class="form-control" id="profilePicture" name="profile_pic" accept="image/jpg,image/jpeg,image/png" required />
+                  <img src="{{employee.user.profile_pic.url}}" class="img-thumbnail mb-2" alt="..." style="border-radius: 0.5rem;" id="profilePicturePreview" />
+                  <input type="file" class="form-control" id="profilePicture" name="profile_pic" accept="image/jpg,image/jpeg,image/png" 
+                  {% if not enployee %}requiredd{% endif %} />
                 </div>
 
                 <div class="col-lg-4 col-md-6 col-sm-6 mt-3">
@@ -178,8 +203,9 @@
                     Picture of ID
                     <span>*</span>
                   </label>
-                  <img src="" class="img-thumbnail mb-2" alt="..." style="border-radius: 0.5rem;" id="picture_of_id_preview" />
-                  <input type="file" class="form-control" id="picture_of_id" name="picture_of_id" accept="image/jpg,image/jpeg,image/png" required />
+                  <img src="{{employee.id_image.url}}" class="img-thumbnail mb-2" alt="..." style="border-radius: 0.5rem;" id="picture_of_id_preview" />
+                  <input type="file" class="form-control" id="picture_of_id" name="picture_of_id" accept="image/jpg,image/jpeg,image/png" 
+                  {% if not enployee %}requiredd{% endif %} />
                 </div>
               </div>
             </div>
@@ -200,11 +226,17 @@
     let imageInput = document.getElementById('profilePicture')
     const img = document.querySelector('#profilePicturePreview')
     img.style.display = 'none'
-    
+    if (img.src !== '') {
+      img.style.display = 'block'
+    }
+
     let picture_of_id = document.getElementById('picture_of_id')
     const img_id = document.querySelector('#picture_of_id_preview')
     img_id.style.display = 'none'
-    
+    if (img_id.src !== '') {
+      img_id.style.display = 'block'
+    }
+
     imageInput.addEventListener('change', function () {
       img.style.display = 'block'
     
