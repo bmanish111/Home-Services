@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -71,7 +72,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "Home_Service.wsgi.application"
+# WSGI_APPLICATION = "Home_Service.wsgi.application"
+ASGI_APPLICATION = "Home_Service.asgi.application"  # self added for channels
 
 
 # Database
@@ -146,4 +148,16 @@ MESSAGE_TAGS = {
     messages.SUCCESS: "alert-success",
     messages.WARNING: "alert-warning",
     messages.ERROR: "alert-danger",
+}
+
+
+# Channels settings
+# for localhost only
+# for production we should use Redis
+
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
 }

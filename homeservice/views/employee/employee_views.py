@@ -1,5 +1,5 @@
 from django.shortcuts import HttpResponse, redirect, render
-from homeservice.models import Service, Employee, Appointment
+from homeservice.models import Service, Employee, Appointment, Rating
 from homeservice.decorators import role_required
 from django.contrib import messages
 
@@ -89,3 +89,32 @@ def appointment_completed(request, appointment_id):
             messages.error(request, "Invalid request")
 
     return render(request, "employee/appointments.html", {"appointments": appointments})
+
+
+@role_required("employee")
+def reviews(request):
+    reviews = Rating.objects.filter(employee=request.user.employee)
+
+    # destructuring the reviews because we need to change the rate to a string so that we can use it in the template to iterate over the stars
+    processed_reviews = []
+    for review in reviews:
+        if review.rate == 1:
+            rate = "a"
+        elif review.rate == 2:
+            rate = "aa"
+        elif review.rate == 3:
+            rate = "aaa"
+        elif review.rate == 4:
+            rate = "aaaa"
+        elif review.rate == 5:
+            rate = "aaaaa"
+
+        review = {
+            "rate": rate,
+            "review": review.review,
+            "customer": review.customer,
+            "date": review.date,
+        }
+        processed_reviews.append(review)
+
+    return render(request, "employee/reviews.html", {"reviews": processed_reviews})

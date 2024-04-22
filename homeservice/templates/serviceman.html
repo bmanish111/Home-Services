@@ -128,106 +128,11 @@
 
   <hr class="p-0 m-0" />
 
-  <section>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <h2 class="mb-5 text-center">Rating &amp; Reviews</h2>
-        </div>
-      </div>
-      {% if reviews %}
-        {% for review in reviews %}
-          <div class="row d-flex justify-content-center mb-3">
-            <div class="col">
-              <div class="card border-bottom" style="border: 0">
-                <div class="card-body p-0">
-                  <div class="row">
-                    <div class="col-lg-4 d-flex justify-content-center align-items-center mb-4 mb-lg-0">
-                      <img src="{{ review.customer.profile_pic.url }}" class="rounded-circle shadow-1" alt="woman avatar" width="150" height="150" style="object-fit: cover;" />
-                    </div>
-                    <div class="col-lg-8">
-                      <ul class="list-unstyled d-flex" style="font-size: 1.5rem;">
-                        {% for i in review.rate %}
-                          <li class="me-2">
-                            <i class="bi bi-star-fill text-warning"></i>
-                          </li>
-                        {% endfor %}
-                      </ul>
-                      <p class="text-muted fw-light">{{ review.review }}</p>
-                      <p class="fw-bold lead mb-2">
-                        <strong>{{ review.customer.fullname }}</strong>
-                      </p>
-                      <p class="text-muted fw-light text-end">
-                        Posted on: <i>{{ review.date }}</i>
-                      </p>
-
-                      {% if review.customer == request.user %}
-                        <div class="notice_action">
-                          <div class="notice_action_btns">
-                            <a class="btn btn-primary w-100" href="">Edit</a>
-                            <a class="btn btn-danger w-100" href="" onclick="return confirm('Are you sure want to delete ?')">Delete</a>
-                          </div>
-                        </div>
-                      {% endif %}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        {% endfor %}
-      {% else %}
-        <p>No Reviews for the serviceman.</p>
-      {% endif %}
-      {% comment %}reviews{% endcomment %}
-
-      {% comment %} <div class="row d-flex justify-content-center mb-3">
-        <div class="col">
-          <div class="card border-bottom" style="border: 0">
-            <div class="card-body p-0">
-              <div class="row">
-                <div class="col-lg-4 d-flex justify-content-center align-items-center mb-4 mb-lg-0">
-                  <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20%2810%29.webp" class="rounded-circle img-fluid shadow-1" alt="woman avatar" width="150" height="150" />
-                </div>
-                <div class="col-lg-8">
-                  <ul class="list-unstyled d-flex" style="font-size: 1.5rem;">
-                    <li class="me-2">
-                      <i class="bi bi-star-fill text-warning"></i>
-                    </li>
-                    <li class="me-2">
-                      <i class="bi bi-star-fill text-warning"></i>
-                    </li>
-                    <li class="me-2">
-                      <i class="bi bi-star-fill text-warning"></i>
-                    </li>
-                    <li class="me-2">
-                      <i class="bi bi-star-fill text-warning"></i>
-                    </li>
-                    <li class="me-2">
-                      <i class="bi bi-star-half text-warning"></i>
-                    </li>
-                  </ul>
-                  <p class="text-muted fw-light">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam repudiandae unde fugit, vitae saepe iure voluptatibus sequi temporibus nostrum esse sit nam corrupti beatae repellat consequuntur ipsa aspernatur. Illum, iusto!</p>
-                  <p class="fw-bold lead mb-2">
-                    <strong>Anna Smith</strong>
-                  </p>
-                  <p class="text-muted fw-light text-end">
-                    Posted on: <i>2022-12-22</i>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> {% endcomment %}
-    </div>
-  </section>
+  {% include 'components/ratings.html' %}
 {% endblock %}
 
 {% block script %}
   <script>
-    // script.js
-    
     // To access the stars
     let stars = document.getElementsByClassName('star')
     let output = document.getElementById('output')
@@ -256,52 +161,5 @@
         i++
       }
     }
-    
-    /* document.addEventListener('DOMContentLoaded', function () {
-          var form = document.getElementById('rating-from')
-        
-          form.addEventListener('submit', function (e) {
-            e.preventDefault() // Prevent the default form submission
-        
-            var formData = new FormData(form)
-            form.reset()
-            remove()
-            document.getElementById('output').innerText = 'Rating is: 0/5'
-            fetch(form.action, {
-              method: form.method,
-              body: formData,
-              headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-              }
-            })
-              .then((response) => {
-                if (!response.ok) {
-                  return response.json().then((data) => {
-                    let dataMessage = data.message
-                    showAlert('alert-danger', response.statusText, data.message)
-                  })
-                }
-                return response.json()
-              })
-              .then((data) => {
-                if (data) {
-                  showAlert('alert-success', 'success', data.message)
-                }
-              })
-              .catch((error) => console.error('There was a problem with the fetch operation:', error))
-          })
-        })
-        
-        function showAlert(type, status, message) {
-          var myAlert = document.getElementById('myAlert')
-          myAlert.classList.add(type)
-          myAlert.classList.add('show')
-          myAlert.innerHTML = `<strong id>${status}</strong> ${message}`
-        
-          setTimeout(() => {
-            myAlert.classList.remove('show')
-            myAlert.classList.remove(type)
-          }, 5000)
-        } */
   </script>
 {% endblock %}

@@ -1,0 +1,53 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <h2 class="mb-5 text-center">Rating &amp; Reviews</h2>
+      </div>
+    </div>
+    {% if reviews %}
+      {% for review in reviews %}
+        <div class="row d-flex justify-content-center mb-3">
+          <div class="col">
+            <div class="card border-bottom" style="border: 0">
+              <div class="card-body p-0">
+                <div class="row">
+                  <div class="col-lg-4 d-flex justify-content-center align-items-center mb-4 mb-lg-0">
+                    <img src="{{ review.customer.profile_pic.url }}" class="rounded-circle shadow-1" alt="woman avatar" width="150" height="150" style="object-fit: cover;" />
+                  </div>
+                  <div class="col-lg-8">
+                    <ul class="list-unstyled d-flex" style="font-size: 1.5rem;">
+                      {% for i in review.rate %}
+                        <li class="me-2">
+                          <i class="bi bi-star-fill text-warning"></i>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                    <p class="text-muted fw-light">{{ review.review }}</p>
+                    <p class="fw-bold lead mb-2">
+                      <strong>{{ review.customer.fullname }}</strong>
+                    </p>
+                    <p class="text-muted fw-light text-end">
+                      Posted on: <i>{{ review.date }}</i>
+                    </p>
+
+                    {% if review.customer == request.user %}
+                      <div class="notice_action">
+                        <div class="notice_action_btns">
+                          <a class="btn btn-primary w-100" href="">Edit</a>
+                          <a class="btn btn-danger w-100" href="" onclick="return confirm('Are you sure want to delete ?')">Delete</a>
+                        </div>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>No Reviews for the serviceman.</p>
+    {% endif %}
+  </div>
+</section>

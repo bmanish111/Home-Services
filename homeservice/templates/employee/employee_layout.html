@@ -21,11 +21,18 @@
   </head>
   <body>
     {% include 'employee/navbar.html' %}
+    <div class="notification" style="z-index: 9999;
+    position: fixed;
+    width: calc(100% - 2rem);
+    top: 5rem;
+    left: 1rem;
+    right: 1rem;"></div>
     {% block main_content %}
 
     {% endblock %}
     {% include 'components/footer.html' %}
 
+    <script src="{% static 'js/employee_notification.js' %}"></script>
     {% block script %}
 
     {% endblock %}

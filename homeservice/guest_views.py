@@ -60,7 +60,7 @@ def service_details(request, slug, employee_id=None):
             {"employee": employee, "reviews": processed_reviews},
         )
     service = Service.objects.get(slug=slug)
-    employees = Employee.objects.filter(job_title=service.pk)
+    employees = Employee.objects.filter(job_title=service.pk, is_verified=True)
     return render(
         request, "service_details.html", {"service": service, "employees": employees}
     )

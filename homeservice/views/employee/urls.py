@@ -17,4 +17,6 @@ urlpatterns = [
         employee_views.appointment_completed,
         name="employee_appointment_completed",
     ),
+
+    path("reviews/", employee_views.reviews, name="employee_reviews"),
 ]

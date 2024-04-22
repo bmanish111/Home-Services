@@ -1,0 +1,13 @@
+{% extends 'employee/employee_layout.html' %}
+{% load static %}
+{% block page_title %}
+  Reviews
+{% endblock %}
+{% block links %}
+  <link rel="stylesheet" href="{% static 'css/table.css' %}" />
+{% endblock %}
+{% block main_content %}
+  <div class="mt-5"></div>
+  {% include 'components/message.html' %}
+  {% include 'components/ratings.html' %}
+{% endblock %}
